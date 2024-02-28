@@ -1,0 +1,25 @@
+.Main1{
+      background-position: 'center';
+      min-height: '100vh';
+      display: 'flex';
+      justify-content: 'center';
+      align-items: 'center';
+      padding: '20px';
+}
+.Main2{
+    background: rgb(253, 253, 252);
+    padding: '20px';
+    border-radius: '2px';
+    max-width: '400px';
+    width: '100%';
+    text-align: 'center';
+    
+}
+.table{
+    width: '100%';
+    border: '1px solid #ccc';  
+    margin-top: '20px';
+   
+    border-collapse: 'collapse';
+    background-color: black;
+}
