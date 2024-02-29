@@ -1,6 +1,6 @@
 import React from 'react';
 import Login from './components/Login';
-import Logout from './components/Logout';
+import Logout from './components/Home';
 import { useSelector } from 'react-redux'; // Import useSelector from react-redux
 import { selectUser } from './redux/userslice'; // Import selectUser from userslice
 
