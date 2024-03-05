@@ -1,12 +1,11 @@
 // UpdateUsers.jsx
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { Button, TextField, Dialog, DialogActions, DialogContent, DialogTitle } from '@mui/material';
-
-function UpdateUsers({ userId, userEmail, userName, onUpdate }) {
+function UpdateUsers({ userId }) {
   const [open, setOpen] = useState(false);
-  const [editedName, setEditedName] = useState(userName);
-  const [editedEmail, setEditedEmail] = useState(userEmail);
+  const [data, setData] = useState([]);
+  
 
   const handleOpen = () => {
     setOpen(true);
@@ -15,27 +14,22 @@ function UpdateUsers({ userId, userEmail, userName, onUpdate }) {
   const handleClose = () => {
     setOpen(false);
   };
+  
+  useEffect(()=> {
+axios.get(`http://localhost:3000/api/users/+${userId}`)
+.then((res)=> setData(res.data))
+.catch((err)=> console.log(err))
+
+  },[]
+  )
 
   const handleUpdate = async () => {
-    try {
-      const response = await axios.patch(
-        `http://localhost:3000/api/users/update/${userId}`,
-        {  
-          email: editedEmail,
-          name: editedName,
-        },
-        {
-          headers: {
-            'Content-Type': 'application/json',
-          },
-        },
-        { withCredentials: true }
-      );
-      onUpdate(response.data);
-      handleClose();
-    } catch (error) {
-      console.error("Error updating user:", error);
-    }
+  
+    axios.patch(`http://localhost:3000/api/users/${userId}`,data)
+    .then((response) => {
+      alert("data saved successfully");
+      
+    })
   };
   
   return (
@@ -44,12 +38,16 @@ function UpdateUsers({ userId, userEmail, userName, onUpdate }) {
       <Dialog open={open} onClose={handleClose}>
         <DialogTitle>Edit User</DialogTitle>
         <DialogContent>
-          <TextField value={editedEmail} onChange={(e) => setEditedEmail(e.target.value)} label="Email" fullWidth />
-          <TextField value={editedName} onChange={(e) => setEditedName(e.target.value)} label="Name" fullWidth />
+          <TextField disabled value={data.email} onChange={(e) => setData({...data,email:e.target.value})} label="Email" fullWidth />
+          <TextField value={data.name} onChange={(e) => setData({...data,name:e.target.value})} label="Name" fullWidth />
         </DialogContent>
         <DialogActions>
           <Button onClick={handleClose}>Cancel</Button>
-          <Button onClick={handleUpdate}>Update</Button>
+          <Button  onClick={()=>{
+            handleUpdate();
+            handleClose();
+            }
+            }>Update</Button>
         </DialogActions>
       </Dialog>
     </div>

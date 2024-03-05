@@ -1,9 +1,8 @@
-// GetAllUsers.jsx
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper } from '@mui/material';
 import UpdateUsers from './UpdateUser';
-import './Getallusers.css';
+//import './Getallusers.css';
 
 function GetAllUsers() {
   const [users, setUsers] = useState([]);
@@ -19,7 +18,8 @@ function GetAllUsers() {
 
   useEffect(() => {
     getData();
-  }, []);
+
+  }, [users]);
 
   return (
     <div className='Main1'>
@@ -41,7 +41,7 @@ function GetAllUsers() {
                   <TableCell>{person.email}</TableCell>
                   <TableCell>{person.name}</TableCell>
                   <TableCell>
-                    <UpdateUsers userId={person.id} userEmail={person.email} userName={person.name} onUpdate={getData} />
+                    <UpdateUsers userId={person.id} />
                   </TableCell>
                 </TableRow>
               ))}
